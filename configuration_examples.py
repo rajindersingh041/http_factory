@@ -23,11 +23,11 @@ async def demo_default_configuration():
     print(f"Groww default rate_limit: {GROWW_CONFIG['rate_limit']}")
 
     async with UpstoxService() as upstox:
-        print(f"✅ UpstoxService initialized with default config")
+        print("✅ UpstoxService initialized with default config")
         print(f"   Base URL: {upstox.client.base_url}")
 
     async with GrowwService() as groww:
-        print(f"✅ GrowwService initialized with default config")
+        print("✅ GrowwService initialized with default config")
         print(f"   Base URL: {groww.client.base_url}")
 
 

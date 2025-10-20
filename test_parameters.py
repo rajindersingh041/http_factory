@@ -282,6 +282,7 @@ class TestParameterMapperFactory:
 
     def test_get_mapper_unknown(self):
         """Test error when getting unknown mapper"""
+        import pytest
         with pytest.raises(ValueError, match="No parameter mapper found for service: unknown"):
             ParameterMapperFactory.get_mapper("unknown")
 

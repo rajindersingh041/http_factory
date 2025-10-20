@@ -100,7 +100,7 @@ async def main():
     }
 
     async with UpstoxService(config=custom_upstox_config) as custom_upstox:
-        print(f"🔧 Custom Upstox config:")
+        print("🔧 Custom Upstox config:")
         print(f"   Base URL: {custom_upstox.client.base_url}")
         print(f"   Rate limit: {custom_upstox.client.rate_limiter.requests_per_second} RPS")
         print(f"   Custom header: {custom_upstox.client.default_headers.get('X-Client')}")

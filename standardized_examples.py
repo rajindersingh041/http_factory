@@ -70,7 +70,7 @@ async def demo_standardized_order_placement():
             mapped_params = mapper.map_order_params(order_params)
 
             print(f"   ✅ Mapped Parameters: {mapped_params}")
-            print(f"   ℹ️ Would execute: await service.place_order_standard(order_params)")
+            print("   ℹ️ Would execute: await service.place_order_standard(order_params)")
 
         except Exception as e:
             print(f"   ❌ Error: {e}")
@@ -103,7 +103,7 @@ async def demo_standardized_quotes():
             mapped_params = mapper.map_quote_params(quote_params)
 
             print(f"   ✅ Mapped Parameters: {mapped_params}")
-            print(f"   ℹ️ Would execute: await service.get_quotes_standard(quote_params)")
+            print("   ℹ️ Would execute: await service.get_quotes_standard(quote_params)")
 
         except Exception as e:
             print(f"   ❌ Error: {e}")
@@ -144,7 +144,7 @@ async def demo_standardized_historical_data():
             mapped_params = mapper.map_historical_params(historical_params)
 
             print(f"   ✅ Mapped Parameters: {mapped_params}")
-            print(f"   ℹ️ Would execute: await service.get_historical_data_standard(historical_params)")
+            print("   ℹ️ Would execute: await service.get_historical_data_standard(historical_params)")
 
         except Exception as e:
             print(f"   ❌ Error: {e}")
@@ -227,8 +227,8 @@ async def demo_advanced_usage():
         }
     )
 
-    print(f"\n🏛️ Upstox-Enhanced Order:")
-    print(f"   Base order + After Market Order + Custom User ID")
+    print("\n🏛️ Upstox-Enhanced Order:")
+    print("   Base order + After Market Order + Custom User ID")
     print(f"   Extras: {upstox_order.extras}")
 
     # XTS-specific features
@@ -247,15 +247,15 @@ async def demo_advanced_usage():
         }
     )
 
-    print(f"\n🏛️ XTS-Enhanced Order:")
-    print(f"   Base order + Instrument ID + Parent Order + Unique ID")
+    print("\n🏛️ XTS-Enhanced Order:")
+    print("   Base order + Instrument ID + Parent Order + Unique ID")
     print(f"   Extras: {xts_order.extras}")
 
     # Show how the same standardized interface handles all cases
-    print(f"\n✅ Usage (same for all brokers):")
-    print(f"   await upstox_service.place_order_standard(upstox_order)")
-    print(f"   await xts_service.place_order_standard(xts_order)")
-    print(f"   # Automatically maps extras to broker-specific format!")
+    print("\n✅ Usage (same for all brokers):")
+    print("   await upstox_service.place_order_standard(upstox_order)")
+    print("   await xts_service.place_order_standard(xts_order)")
+    print("   # Automatically maps extras to broker-specific format!")
 
 
 async def main():

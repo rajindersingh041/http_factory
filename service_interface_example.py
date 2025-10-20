@@ -7,7 +7,6 @@ The application uses ITradingService interface without knowing the specific impl
 
 import asyncio
 import logging
-from typing import Optional
 
 from network_test.services import ITradingService, ServiceFactory
 

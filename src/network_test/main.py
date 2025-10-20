@@ -1,7 +1,7 @@
 import asyncio
 import logging
 
-from network_test.services import (CustomAPIService, ITradingService,
+from network_test.services import (ITradingService,
                                    ServiceFactory)
 
 # Configure logging to see what's happening with network requests

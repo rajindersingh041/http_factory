@@ -1,7 +1,7 @@
 import asyncio
 import logging
 
-from network_test.services import GrowwService, UpstoxService
+from network_test.services import UpstoxService
 
 # Configure logging to see what's happening with network requests
 logging.basicConfig(

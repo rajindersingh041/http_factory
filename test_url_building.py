@@ -3,7 +3,6 @@
 Test URL building logic without making HTTP requests
 """
 
-import asyncio
 
 from src.network_test.network import AsyncNetworkClient
 

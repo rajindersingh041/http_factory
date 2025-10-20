@@ -28,7 +28,7 @@ async def demo_xts_authentication():
     }
 
     async with XTSService(config=xts_config) as xts:
-        print(f"✅ XTS Service initialized")
+        print("✅ XTS Service initialized")
         print(f"   Interactive base URL: {xts.config.get('interactive_base_url')}")
         print(f"   Market Data base URL: {xts.config.get('market_base_url')}")
         print(f"   Available endpoints: {len(xts.list_endpoints())} total")
@@ -50,8 +50,8 @@ async def demo_xts_authentication():
             # market_response = await xts.login_market()
             print("   ℹ️ Would authenticate with real credentials")
 
-        except Exception as e:
-            print(f"   ⚠️ Expected auth error with dummy credentials")
+        except Exception:
+            print("   ⚠️ Expected auth error with dummy credentials")
 
 
 async def demo_interactive_api_usage():
@@ -166,7 +166,7 @@ async def demo_dual_api_workflow():
         "rate_limit": 10
     }
 
-    async with XTSService(config=xts_config) as xts:
+    async with XTSService(config=xts_config) as _:
         print("🔗 Complete Trading Workflow Example:")
 
         workflow_steps = [

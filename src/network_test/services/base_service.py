@@ -12,11 +12,10 @@ from typing import Any, Dict, Optional
 from ..network import AsyncNetworkClient
 from .interface import ITradingService
 from .models import EndpointConfig, NetworkClientConfig
-from .parameters import (ParameterMapperFactory, StandardHistoricalParams,
-                         StandardOrderParams, StandardQuoteParams)
+from .scalable_architecture import (StandardizedOperationsMixin)
 
 
-class BaseTradingService(ITradingService, ABC):
+class BaseTradingService(ITradingService, StandardizedOperationsMixin, ABC):
     """
     Abstract base class for all trading service implementations.
 
@@ -111,6 +110,9 @@ class BaseTradingService(ITradingService, ABC):
 
         # Initialize the network client with configuration
         self.client = AsyncNetworkClient(**client_config.to_dict())
+
+        # Initialize standardized operations support
+        self.__init_standardized_operations__(self.get_service_name())
 
     @abstractmethod
     def get_default_config(self) -> Dict[str, Any]:
@@ -250,75 +252,7 @@ class BaseTradingService(ITradingService, ABC):
         endpoints = self.get_service_endpoints()
         return {name: config.description for name, config in endpoints.items()}
 
-    # Standardized trading operations implementation
-    async def place_order_standard(self, params: StandardOrderParams) -> Any:
-        """
-        Place an order using standardized parameters.
-
-        This method automatically maps standardized parameters to the
-        broker-specific format and calls the appropriate endpoint.
-        """
-        # Get the parameter mapper for this service
-        mapper = ParameterMapperFactory.get_mapper(self.get_service_name())
-
-        # Map standardized parameters to broker-specific format
-        broker_params = mapper.map_order_params(params)
-
-        # Call the broker-specific place_order endpoint
-        return await self.call_endpoint("place_order", json_data=broker_params)
-
-    async def get_quotes_standard(self, params: StandardQuoteParams) -> Any:
-        """
-        Get quotes using standardized parameters.
-        """
-        mapper = ParameterMapperFactory.get_mapper(self.get_service_name())
-        broker_params = mapper.map_quote_params(params)
-
-        # Try different common quote endpoint names
-        quote_endpoints = ["quote", "quotes", "live_quotes", "market_quote"]
-        endpoints = self.get_service_endpoints()
-
-        for endpoint_name in quote_endpoints:
-            if endpoint_name in endpoints:
-                return await self.call_endpoint(endpoint_name, query_params=broker_params)
-
-        # Fallback: look for any endpoint with 'quote' in the name
-        quote_endpoint = next(
-            (name for name in endpoints.keys() if 'quote' in name.lower()),
-            None
-        )
-
-        if quote_endpoint:
-            return await self.call_endpoint(quote_endpoint, query_params=broker_params)
-
-        raise ValueError(f"No quote endpoint found for service: {self.get_service_name()}")
-
-    async def get_historical_data_standard(self, params: StandardHistoricalParams) -> Any:
-        """
-        Get historical data using standardized parameters.
-        """
-        mapper = ParameterMapperFactory.get_mapper(self.get_service_name())
-        broker_params = mapper.map_historical_params(params)
-
-        # Try different common historical data endpoint names
-        historical_endpoints = ["historical_candles", "candles", "historical", "ohlc", "kline"]
-        endpoints = self.get_service_endpoints()
-
-        for endpoint_name in historical_endpoints:
-            if endpoint_name in endpoints:
-                return await self.call_endpoint(endpoint_name, query_params=broker_params)
-
-        # Fallback: look for any endpoint with historical data keywords
-        historical_endpoint = next(
-            (name for name in endpoints.keys()
-             if any(keyword in name.lower() for keyword in ['historical', 'candle', 'ohlc', 'chart'])),
-            None
-        )
-
-        if historical_endpoint:
-            return await self.call_endpoint(historical_endpoint, query_params=broker_params)
-
-        raise ValueError(f"No historical data endpoint found for service: {self.get_service_name()}")
+    # Note: Standardized operations are now handled by StandardizedOperationsMixin
 
     async def close(self) -> None:
         """Close the service and clean up resources."""

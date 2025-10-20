@@ -125,7 +125,7 @@ async def demo_dynamic_service_modification():
             description="Get multiple quotes in one call"
         )
 
-        print(f"✅ Added custom endpoints to existing service")
+        print("✅ Added custom endpoints to existing service")
         print(f"✅ Total endpoints: {len(upstox.list_endpoints())}")
         print(f"✅ New endpoints: {[k for k in upstox.list_endpoints().keys() if 'custom' in k or 'batch' in k]}")
 

@@ -10,8 +10,6 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
 
-from .parameters import (StandardHistoricalParams, StandardOrderParams,
-                         StandardQuoteParams)
 
 
 class ITradingService(ABC):
@@ -92,45 +90,43 @@ class ITradingService(ABC):
         """
 
 
-    # Standardized trading operations
-    @abstractmethod
-    async def place_order_standard(self, params: StandardOrderParams) -> Any:
+    # Standardized trading operations (handled by StandardizedOperationsMixin)
+    async def place_order_standard(self, **kwargs) -> Any:
         """
         Place an order using standardized parameters.
 
         Args:
-            params: Standardized order parameters that will be mapped
-                   to broker-specific format automatically
+            **kwargs: Standardized order parameters that will be mapped
+                     to broker-specific format automatically
 
         Returns:
             Order response from the broker
         """
+        pass  # Implementation provided by StandardizedOperationsMixin
 
-    @abstractmethod
-    async def get_quotes_standard(self, params: StandardQuoteParams) -> Any:
+    async def get_quotes_standard(self, **kwargs) -> Any:
         """
         Get quotes using standardized parameters.
 
         Args:
-            params: Standardized quote parameters
+            **kwargs: Standardized quote parameters
 
         Returns:
             Quote data from the broker
         """
+        pass  # Implementation provided by StandardizedOperationsMixin
 
-    @abstractmethod
-    async def get_historical_data_standard(self, params: StandardHistoricalParams) -> Any:
+    async def get_historical_data_standard(self, **kwargs) -> Any:
         """
         Get historical data using standardized parameters.
 
         Args:
-            params: Standardized historical data parameters
+            **kwargs: Standardized historical data parameters
 
         Returns:
             Historical data from the broker
         """
-
-    # Context manager support
+        pass  # Implementation provided by StandardizedOperationsMixin    # Context manager support
     @abstractmethod
     async def __aenter__(self) -> ITradingService:
         """Async context manager entry"""

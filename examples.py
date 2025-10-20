@@ -7,7 +7,6 @@ with different configurations and patterns.
 
 import asyncio
 import logging
-from typing import Any, Dict, List
 
 from network_test.config import INTERVALS, POPULAR_INSTRUMENTS, UPSTOX_CONFIG
 from network_test.services import GrowwService, UpstoxService
@@ -131,7 +130,7 @@ async def demo_caching_behavior():
         print("Making first request (cache miss)...")
         start_time = asyncio.get_event_loop().time()
         try:
-            data1 = await upstox.get_candles(instrument, limit=5)
+            _ = await upstox.get_candles(instrument, limit=5)
             time1 = asyncio.get_event_loop().time() - start_time
             print(f"✅ First request: {time1:.3f}s")
         except Exception as e:
@@ -141,7 +140,7 @@ async def demo_caching_behavior():
         print("Making second request (cache hit)...")
         start_time = asyncio.get_event_loop().time()
         try:
-            data2 = await upstox.get_candles(instrument, limit=5)
+            _ = await upstox.get_candles(instrument, limit=5)
             time2 = asyncio.get_event_loop().time() - start_time
             print(f"✅ Second request: {time2:.3f}s")
             print(f"🚀 Speed improvement: {time1/time2:.1f}x faster!")
