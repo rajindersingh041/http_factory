@@ -33,11 +33,11 @@ class ITradeTrailer(Protocol):
 
     async def update_trade_price(self, trade: 'Trade', new_price: float) -> Dict[str, Any]:
         """Update trade price and return any triggered actions"""
-        ...
+
 
     def subscribe(self, observer: 'MTMObserver') -> None:
         """Subscribe to MTM events"""
-        ...
+
 
 
 class IMTMCalculator(Protocol):
